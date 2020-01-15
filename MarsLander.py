@@ -10,6 +10,8 @@ cadr = pygame.display.set_mode((width,height))
 
 k = random.randint(3, width//50)
 v=[]
+m = random.randint(0, k-3)
+
 for i in range(0, k):
     y = random.randint(int(height/2), height-25)
     x = random.randint(0, width)
@@ -18,10 +20,14 @@ for i in range(0, k):
     if i == k-1:
         x = width
     v.append([x,y])
-v = sorted(v)
-m = random.randint(0, k-3)
+v = sorted(v) 
+
+for i in range(1, len(v)-1):
+    if v[i][0]-v[i-1][0]<35:
+        v[i][0]=v[i-1][0]+35
+    else:
+        v[i][0]=v[i][0]
 v[m+1][1]= v[m][1]
-v[m+1][0]= max(v[m][0]+40, v[m+1][0]- v[m][0])
 
 WHITE = (255, 255, 255)
 Xsh = width//2
@@ -69,7 +75,6 @@ def Earth (coordX, Y1):
     clock.tick(10)
     shattle = pygame.draw.aalines(cadr, WHITE, True, [[Xsh, Y1-25], [Xsh-10, Y1-15], [Xsh-7, Y1-10],[Xsh-10, Y1], [Xsh-7, Y1-10], [Xsh+7, Y1-10],[Xsh+10, Y1], [Xsh+7, Y1-10],[Xsh+10, Y1-15]])
     pygame.draw.aalines(cadr, WHITE, True, [[coordX+3, Y1], [coordX+3, Y1-15], [coordX+10, Y1-15], [coordX+10, Y1-10], [coordX+3, Y1-10]])
-    print(coordX)
     PAUSED = True
         
 while flag:
@@ -99,9 +104,9 @@ while flag:
                 exit()
             elif i.type == pygame.KEYDOWN:
                 if i.key == pygame.K_LEFT:
-                    Xsh -= 20
+                    Xsh -= 12
                 elif i.key == pygame.K_RIGHT:
-                    Xsh += 20
+                    Xsh += 12
                 elif key_list[pygame.K_p]:
                     PAUSED = not PAUSED
         
